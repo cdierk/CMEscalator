@@ -9,9 +9,9 @@ void setup() {
   pinMode(5, OUTPUT);     // green
   pinMode(10, OUTPUT);     // blue
   pinMode(9, OUTPUT);     // red
-  pinMode(0, INPUT);
-  pinMode(1, INPUT);
-  pinMode(2, INPUT);
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
   digitalWrite(5, LOW);
   digitalWrite(10, LOW);
   digitalWrite(9, HIGH);
@@ -24,15 +24,46 @@ void loop() {
   digitalWrite(13, LOW);    // turn the LED off by making the voltage LOW
   delay(100);              // wait for a second
 
-  int dis= analogRead(0);
-  analogWrite(5, dis);
+  //int dis= map(analogRead(A0), 0, 1023, 0, 255);
+  int dis = analogRead(A0);
+  int dis2 = analogRead(A1);
+  //int dis2= map(analogRead(A1), 0, 1023, 0, 255);
+  int dis3= map(analogRead(A2), 0, 1023, 0, 255);
 
-  dis= analogRead(1);
-  analogWrite(10, dis);
-  
-  dis= analogRead(2);
-  Serial.println(dis);
-  analogWrite(9, dis);
-  
+  int linearized = 6787/(dis - 3) - 4;
+  int linearized2 = 6787/(dis2 - 3) - 4;
+  Serial.print(linearized);
+  Serial.print(" ");
+  Serial.print(linearized2);
+  Serial.print(" ");
+  Serial.println(dis3);
+//  Serial.println(dis);
+//  if (dis > 100){
+//    analogWrite(5, HIGH);
+//  }
+//  else{
+//    analogWrite(5,LOW);
+//  }
+//
+//  dis= analogRead(1);
+//  if (dis > 100){
+//    analogWrite(10, HIGH);
+//  }
+//  else{
+//    analogWrite(10,LOW);
+//  }
+//  
+//  dis= analogRead(2);
+//  if (dis > 100){
+//    analogWrite(9, HIGH);
+//  }
+//  else{
+//    analogWrite(9,LOW);
+//  }
+
+    analogWrite(5, dis);
+    analogWrite(10, dis2);
+    analogWrite(9, dis3);
 }
+
 
